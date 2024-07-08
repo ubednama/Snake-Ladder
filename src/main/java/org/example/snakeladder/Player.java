@@ -20,6 +20,7 @@ public class Player {
         coin = new Circle(tileSize/3);
         coin.setFill(coinColor);
         currentPosition = 0;
+        coin.setVisible(false);
         name = playerName;
     }
 
@@ -40,6 +41,7 @@ public class Player {
     public void movePlayer(int diceValue) {
         if (currentPosition + diceValue <= 100) {
             int targetPosition = currentPosition + diceValue;
+            coin.setVisible(true);
             List<Integer> positions = getIntermediatePositions(currentPosition, targetPosition);
 
             SequentialTransition sequentialTransition = new SequentialTransition();
@@ -61,10 +63,14 @@ public class Player {
 
             sequentialTransition.play();
         }
+        if (currentPosition == 0) {
+            coin.setVisible(false);
+        }
     }
 
     private TranslateTransition translateAnimation(int steps) {
-        TranslateTransition animate = new TranslateTransition(Duration.millis(100 * steps), coin);
+        int durationMillis = (steps <= 6) ? 100 * steps : 10 * steps;
+        TranslateTransition animate = new TranslateTransition(Duration.millis(durationMillis), coin);
         animate.setToX(gameBoard.getXCoordinate(currentPosition));
         animate.setToY(gameBoard.getYCoordinate(currentPosition));
         animate.setAutoReverse(false);
@@ -77,6 +83,7 @@ public class Player {
 
     public void startingPosition(){
         currentPosition =  0;
+        coin.setVisible(false);
         movePlayer(0);
     }
 

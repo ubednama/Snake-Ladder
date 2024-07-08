@@ -94,6 +94,7 @@ public class SnakeLadder extends Application {
                 if(gameStarted){
                     if(playerOneTurn){
                         int diceValue = dice.getRolledDiceValue();
+                        diceLabel.setStyle(diceValue == 6 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
                         diceLabel.setText("Dice Value: "+diceValue);
                         playerOne.movePlayer(diceValue);
 
@@ -113,13 +114,19 @@ public class SnakeLadder extends Application {
                             gameStarted=false;
                         }
                         else{
-                            playerOneTurn=false;
-                            playerOneButton.setDisable(true);
-                            playerOneLabel.setText("");
+                            if (diceValue == 6) {
+                                playerOneTurn = true;
+                                playerOneButton.setDisable(false);
+                                playerOneLabel.setText("Your Turn " + playerOne.getName());
+                            } else {
+                                playerOneTurn = false;
+                                playerOneButton.setDisable(true);
+                                playerOneLabel.setText("");
 
-                            playerTwoTurn=true;
-                            playerTwoButton.setDisable(false);
-                            playerTwoLabel.setText("Your Turn "+playerTwo.getName());
+                                playerTwoTurn = true;
+                                playerTwoButton.setDisable(false);
+                                playerTwoLabel.setText("Your Turn " + playerTwo.getName());
+                            }
                         }
                     }
                 }
@@ -132,6 +139,8 @@ public class SnakeLadder extends Application {
                 if(gameStarted){
                     if(playerTwoTurn){
                         int diceValue = dice.getRolledDiceValue();
+                        diceLabel.setStyle(diceValue == 6 ? "-fx-text-fill: red;" : "-fx-text-fill: blue;");
+
                         diceLabel.setText("Dice Value "+diceValue);
                         playerTwo.movePlayer(diceValue);
 
@@ -150,13 +159,19 @@ public class SnakeLadder extends Application {
                             startButton.setText("Play Again!!");
                             gameStarted=false;
                         } else {
-                        playerOneTurn = true;
-                        playerOneButton.setDisable(false);
-                        playerOneLabel.setText("Your Turn "+playerOne.getName());
+                            if (diceValue == 6) {
+                                playerTwoTurn = true;
+                                playerTwoButton.setDisable(false);
+                                playerTwoLabel.setText("Your Turn " + playerTwo.getName());
+                            } else {
+                                playerOneTurn = true;
+                                playerOneButton.setDisable(false);
+                                playerOneLabel.setText("Your Turn " + playerOne.getName());
 
-                        playerTwoTurn = false;
-                        playerTwoButton.setDisable(true);
-                        playerTwoLabel.setText("");
+                                playerTwoTurn = false;
+                                playerTwoButton.setDisable(true);
+                                playerTwoLabel.setText("");
+                            }
                         }
                     }
                 }
